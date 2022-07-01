@@ -1,3 +1,4 @@
+import { Negociacao } from '../models/negociacao.js';
 import { Negociacoes } from '../models/negociacoes.js';
 import { View } from './view.js';
 

@@ -1,15 +1,23 @@
-/*minha classe abstrata/generica*/
-/*TypeScript está aplicando o paradigma da orientação a objeto*/
-/*aplicando conceito de herança, classes abstrata, metodos abstratos. */
 export class View {
-    constructor(seletor) {
-        this.elemento = document.querySelector(seletor);
+    constructor(seletor, escapar) {
+        this.escapar = false;
+        const elemento = document.querySelector(seletor);
+        if (elemento) {
+            this.elemento = elemento;
+        }
+        else {
+            throw Error(`Seletor ${seletor} não existe no DOM. Verifique`);
+        }
+        if (escapar) {
+            this.escapar = escapar;
+        }
     }
     update(model) {
-        const template = this.template(model);
+        let template = this.template(model);
+        if (this.escapar) {
+            template = template
+                .replace(/<script>[\s\S]*?<\/script>/, '');
+        }
         this.elemento.innerHTML = template;
     }
 }
-/*temos um código fléxivel e estáticamente tipado.
-tentamos isolar em uma única classe view a maior quantidade de sódigo possível
-*/

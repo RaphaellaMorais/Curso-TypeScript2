@@ -6,16 +6,28 @@
 export abstract class View <T> { /*Tornamos a classe view genérica passando esse T*/ 
     protected elemento: HTMLElement; /* modificador protected diz que só a propria classe ou
     filhas que herdarem dessa classe podem ter acesso a propriedade*/
+    private escapar = false;
 
-    constructor(seletor: string) {
-        this.elemento = document.querySelector(seletor);
+    constructor(seletor: string, escapar?: boolean) {
+        const elemento = document.querySelector(seletor);
+        if (elemento) {
+            this.elemento = elemento as HTMLElement;
+        } else {
+            throw Error(`Seletor ${seletor} não existe no DOM. Verifique`);
+        }
+        if (escapar) {
+            this.escapar = escapar;
+        }
     }
 
 
     public update(model: T): void {
-        const template = this.template(model);
+        let template = this.template(model);
+        if (this.escapar) {
+            template = template
+                .replace(/<script>[\s\S]*?<\/script>/, '');
+        }
         this.elemento.innerHTML = template;
-
     }
 
     protected abstract template(model: T): string;

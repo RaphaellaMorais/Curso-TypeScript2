@@ -4,7 +4,7 @@ export class NegociacoesView extends View {
         return `
         <table class="table table-hover table-bordered">
             <thead>
-                <tr class="table-secondary">
+                <tr>
                     <th>DATA</th>
                     <th>QUANTIDADE</th>
                     <th>VALOR</th>
@@ -35,6 +35,3 @@ export class NegociacoesView extends View {
             .format(data);
     }
 }
-/*mensagem-view e negociacoes-view compartilhavam bastante códigos duplicados
-então tentamos isolar em uma única classe view a maior quantidade de sódigo possível
-*/ 
